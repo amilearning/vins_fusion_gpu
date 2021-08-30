@@ -1,0 +1,9 @@
+<launch>
+
+
+    <node name="vins_node" pkg="vins" type="vins_node" output="screen" args="/home/hmcl/local_ws/src/VINS-Fusion-gpu/config/realsense/realsense_config.yaml">         
+    </node>
+  
+  
+</launch>
+

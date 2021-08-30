@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/opt/ros/melodic/include/**",
+        "/home/hmcl/local_ws/src/VINS-Fusion-gpu/camera_models/include/**",
+        "/home/hmcl/local_ws/src/vision_opencv/cv_bridge/include/**",
+        "/home/hmcl/local_ws/src/vision_opencv/image_geometry/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

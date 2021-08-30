@@ -1,0 +1,103 @@
+%YAML:1.0
+
+#common parameters
+#support: 1 imu 1 cam; 1 imu 2 cam: 2 cam; 
+imu: 1       
+num_of_cam: 2  
+
+imu_topic: "/mavros/imu/data"
+image0_topic: "/camera/infra1/image_rect_raw"
+image1_topic: "/camera/infra2/image_rect_raw"
+output_path: "/home/hmcl/local_ws/src/VINS-Fusion-gpu/config/px4adsadasds"
+
+cam0_calib: "./m/left_realsense.yaml"
+cam1_calib: "./m/right_realsense.yaml"
+image_width: 640
+image_height: 480
+   
+realsense: 0
+
+# Extrinsic parameter between IMU and Camera.
+estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
+                        # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
+
+# [[-0.99974091  0.01426906 -0.01773444  0.0160347 ]
+#  [ 0.02249594  0.50056888 -0.86540438 -0.20432307]
+#  [-0.0034712  -0.86557911 -0.50076018 -0.0923933 ]
+#  [ 0.          0.          0.          1.        ]]
+
+# body_T_cam0: !!opencv-matrix
+#    rows: 4
+#    cols: 4
+#    dt: d
+#    data: [-0.99978058,  0.01608668, -0.01341703,  0.01518589,
+#          0.01969955,  0.50426881, -0.86332201, -0.17444915,         
+#        -0.00712219, -0.86339689, -0.50447507, -0.09234301,
+#        0., 0., 0., 1. ]
+
+# body_T_cam1: !!opencv-matrix
+#    rows: 4
+#    cols: 4
+#    dt: d
+#    data: [-0.99979952,  0.01603165, -0.01199641, -0.03470581,
+#         0.01844645,  0.5044243,  -0.86325886, -0.17342414,
+#        -0.00778818, -0.86330708, -0.50461889, -0.09269758,
+#        0., 0., 0., 1. ]
+
+body_T_cam0: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: d
+   data: [-0.99979121,  0.01613427, -0.01253852,  0.01565814,
+         0.01893129,  0.50046314, -0.86555084, -0.1822113,        
+       -0.00768996, -0.86560749, -0.50066409, -0.09660155,
+       0., 0., 0., 1. ]
+
+body_T_cam1: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: d
+   data: [-0.99980107,  0.01614512, -0.01171166, -0.03458237,
+        0.01823345,  0.50180559, -0.86478823, -0.18065336,
+       -0.00808513, -0.86482974, -0.50200015, -0.0976405,
+       0., 0., 0., 1. ]
+
+
+
+#Multiple thread support
+multiple_thread: 1
+use_gpu: 1
+use_gpu_acc_flow: 1
+
+#feature traker paprameters
+max_cnt: 150                # max feature number in feature tracking
+min_dist: 10            # min distance between two features 
+freq: 0                # frequence (Hz) of publish tracking result. At least 10Hz for good estimation. If set 0, the frequence will be same as raw image 
+F_threshold: 1.0        # ransac threshold (pixel)
+show_track: 0           # publish tracking image as topic
+flow_back: 1            # perform forward and backward optical flow to improve feature tracking accuracy
+
+#optimization parameters
+max_solver_time: 0.04  # max solver itration time (ms), to guarantee real time
+max_num_iterations: 8   # max solver itrations, to guarantee real time
+keyframe_parallax: 10.0 # keyframe selection threshold (pixel)
+
+#imu parameters       The more accurate parameters you provide, the better performance
+#acc_n: 0.1          # accelerometer measurement noise standard deviation. #0.2   0.04
+#gyr_n: 0.01         # gyroscope measurement noise standard deviation.     #0.05  0.004
+#acc_w: 0.001         # accelerometer bias random work noise standard deviation.  #0.002
+#gyr_w: 0.0001       # gyroscope bias random work noise standard deviation.     #4.0e-5
+acc_n: 0.0229069743391   # accelerometer measurement noise standard deviation. #0.2   0.04
+gyr_n: 0.00099255496418         # gyroscope measurement noise standard deviation.     #0.05  0.004
+acc_w: 0.000414662419865         # accelerometer bias random work noise standard deviation.  #0.002
+gyr_w: 1.63993994383e-05    # gyroscope bias random work noise standard deviation.     #4.0e-5
+g_norm: 9.805         # gravity magnitude
+
+#unsynchronization parameters
+estimate_td: 1                      # online estimate time offset between camera and imu
+td: -0.0125577145074                             # initial value of time offset. unit: s. readed image clock + td = real image clock (IMU clock)
+
+#loop closure parameters
+load_previous_pose_graph: 0        # load and reuse previous pose graph; load from 'pose_graph_save_path'
+pose_graph_save_path: "/home/dji/output/pose_graph/" # save and load path
+save_image: 0                   # save image in pose graph for visualization prupose; you can close this function by setting 0 

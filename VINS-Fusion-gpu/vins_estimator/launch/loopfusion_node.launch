@@ -1,0 +1,9 @@
+<launch>
+
+
+   
+    <node name="loop_fusion_node" pkg="loop_fusion" type="loop_fusion_node" output="screen" args="/home/hmcl/local_ws/src/VINS-Fusion-gpu/config/realsense/realsense_config.yaml">         
+    </node>
+  
+</launch>
+
